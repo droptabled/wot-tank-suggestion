@@ -8,12 +8,13 @@ import requests, pytz, os, sys, concurrent.futures
 
 def parse(wg_id, username):
     wg_id = str(wg_id)
-
     response = requests.post(
-        'https://api.worldoftanks.com/wot/account/tanks/',
+        'https://api.worldoftanks.com/wot/tanks/stats/',
         { 
             'application_id': os.environ['APP_ID'],
-            'account_id': wg_id
+            'account_id': wg_id,
+            'extra': 'random',
+            'fields': 'tank_id, random'
         }
     )
     if response.status_code == 200:
@@ -40,7 +41,7 @@ def parse(wg_id, username):
 
         tanks = []
         for tank_stat in user_data:
-            if (int(tank_stat['statistics']['battles'])) > 50:
+            if (int(tank_stat['random']['battles'])) > 50:
                 # find the tank in the tanks db. if not found, update the db
                 try:
                     tank = Tank.objects.get(wg_identifier = tank_stat['tank_id'])
@@ -69,8 +70,17 @@ def parse(wg_id, username):
                         UserStat(
                             wg_user = user,
                             tank = tank,
-                            wins = tank_stat['statistics']['wins'],
-                            battles = tank_stat['statistics']['battles']
+                            spotted = tank_stat['random']['spotted'],
+                            survived_battles = tank_stat['random']['survived_battles'],
+                            hits_percents = tank_stat['random']['hits_percents'],
+                            battles = tank_stat['random']['battles'],
+                            damage_received = tank_stat['random']['damage_received'],
+                            frags = tank_stat['random']['frags'],
+                            stun_number = tank_stat['random']['stun_number'],
+                            capture_points = tank_stat['random']['capture_points'],
+                            hits = tank_stat['random']['hits'],
+                            wins = tank_stat['random']['wins'],
+                            damage_dealt = tank_stat['random']['damage_dealt']
                         )
                     )
         

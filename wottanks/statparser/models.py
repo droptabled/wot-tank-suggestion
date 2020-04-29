@@ -36,8 +36,19 @@ class Tank(models.Model):
 class UserStat(models.Model):
     wg_user = models.ForeignKey(User, to_field='wg_user', on_delete=models.CASCADE)
     tank = models.ForeignKey(Tank, on_delete=models.CASCADE)
-    wins = models.IntegerField(default=0)
+
+    spotted = models.IntegerField(default=0)
+    survived_battles = models.IntegerField(default=0)
+    hits_percents = models.IntegerField(default=0)
     battles = models.IntegerField(default=0)
+    damage_received = models.IntegerField(default=0)
+    frags = models.IntegerField(default=0)
+    stun_number = models.IntegerField(default=0)
+    capture_points = models.IntegerField(default=0)
+    hits = models.IntegerField(default=0)
+    wins = models.IntegerField(default=0)
+    damage_dealt = models.IntegerField(default=0)
+    
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
