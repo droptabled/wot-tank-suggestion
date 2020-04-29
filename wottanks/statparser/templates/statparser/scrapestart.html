@@ -1,0 +1,7 @@
+<ul>
+	<form action="{% url 'statparser:scrapeall' %}" method="post">
+		{% csrf_token %}
+		<input type="text" name="name_start">
+		<input type="submit" value="Load into DB starting from letter">
+	</form>
+</ul>
