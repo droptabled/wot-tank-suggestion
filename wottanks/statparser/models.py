@@ -22,6 +22,7 @@ class Tank(models.Model):
     nation = models.ForeignKey(Nation, on_delete=models.CASCADE)
     type = models.ForeignKey(TankType, on_delete=models.CASCADE)
     is_premium = models.BooleanField()
+    img = models.CharField(max_length=200)
     updated_at = models.DateTimeField(auto_now=True)
     
     def update(self):
@@ -31,7 +32,18 @@ class Tank(models.Model):
         self.average_wr = mean(averagestats)
         self.save()
         
+    def get_node(self):
+        return {
+            "id": self.pk,
+            "name": self.name,
+            "playercount": self.playercount,
+            "nation": self.nation.name
+        }
     
+    # compare the stats between two tanks and return a least-squares weighted
+    # fit between their statistics
+    def compare_tank(self, tank2):
+        return 0
 
 class UserStat(models.Model):
     wg_user = models.ForeignKey(User, to_field='wg_user', on_delete=models.CASCADE)

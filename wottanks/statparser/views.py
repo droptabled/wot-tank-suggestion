@@ -23,22 +23,16 @@ def parse(wg_id, username):
         except KeyError:
             return 'Sorry, account is marked as private'
         
-        user, created = User.objects.get_or_create(wg_user = wg_id, name = username)
-        
-        # only update if the last updated was less than an hour ago
-        if created is False and (datetime.now(tz = pytz.utc) - user.updated_at).seconds < 3600:
-            return 'Sorry, wait at least 1 hour before requesting a refresh'
-        
         # stop if no user found or has no PVP stats
         if user_data is None:
-            user.delete()
             return 'Sorry, user has not played any games'
-        
+
         # exclude users that don't have enough ships for comparison purposes
         if len(user_data) < 10:
-            user.delete()
             return 'Sorry, user has not played enough different tanks'
 
+        user = User.objects.get_or_create(wg_user = wg_id, name = username)[0]
+        
         tanks = []
         for tank_stat in user_data:
             if (int(tank_stat['random']['battles'])) > 50:

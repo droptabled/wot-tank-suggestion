@@ -1,0 +1,14 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: rgb(240,240,240);
+}
+
+.selection rect {
+  background-color: rgb(200,200,200);
+}
+
+rect.improvement-box {
+  fill: rgb(200,200,200);
+  stroke-width: 3;
+  stroke: rgb(150,150,150);
+}

@@ -5,5 +5,8 @@ from . import views
 app_name = 'suggestions'
 
 urlpatterns = [
-    path('test', views.test)
+    path('maintenance', views.maintenance),
+    path('explore', views.explore),
+    path('root_tank', views.root_tank),
+    path('improve_tank', views.improve_tank)
 ]

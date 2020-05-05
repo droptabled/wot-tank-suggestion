@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Tank Explorer</title>
+  <link rel="icon" type="image/png" href="{% static 'icon.png' %}" />
+  <link href="{% static 'explorer.css' %}" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+</head>
+<body>
+  <div>
+  <select id="tank">
+    {% for tank in tanks %}
+    <option value="{{ tank.id }}">{{ tank.name }}</option>
+    {% endfor %}
+  </select>
+  <button id="start"> Start Exploring! </button>
+  </div>
+  <svg>
+    <defs>
+      {% for entry in nations %}
+      <pattern id="{{ entry.name }}" x="0%" y="0%" height="100%" width="100%" viewBox="0 0 160 100">
+        <image x="0%" y="0%" width="160" height="100" href="/static/{{ entry.name }}.svg"></image>
+      </pattern>
+      {% endfor %}
+    </defs>
+    <g id="gcontainer"></g>
+  </svg>
+  <script src="{% static 'explorer.js' %}"></script>
+</body>
+</html>
